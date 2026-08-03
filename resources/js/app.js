@@ -1,35 +1,48 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Mobile Menu Toggle
     const menuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
+
+    const closeMobileMenu = () => {
+        if (mobileMenu) {
+            mobileMenu.classList.add('hidden');
+        }
+        if (menuBtn) {
+            menuBtn.setAttribute('aria-expanded', 'false');
+        }
+    };
+
+    const openMobileMenu = () => {
+        if (mobileMenu) {
+            mobileMenu.classList.remove('hidden');
+        }
+        if (menuBtn) {
+            menuBtn.setAttribute('aria-expanded', 'true');
+        }
+    };
+
     if (menuBtn && mobileMenu) {
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        menuBtn.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                openMobileMenu();
+            } else {
+                closeMobileMenu();
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (mobileMenu && !mobileMenu.contains(event.target) && menuBtn && !menuBtn.contains(event.target)) {
+                closeMobileMenu();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                closeMobileMenu();
+            }
         });
     }
-
-    // 2. FAQ Accordion Toggle
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach(item => {
-        const toggleBtn = item.querySelector('.faq-toggle');
-        const content = item.querySelector('.faq-content');
-        const icon = item.querySelector('.faq-icon');
-
-        if (toggleBtn && content) {
-            toggleBtn.addEventListener('click', () => {
-                const isOpen = !content.classList.contains('hidden');
-                
-                // Close all other FAQs
-                document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
-                document.querySelectorAll('.faq-icon').forEach(i => i.classList.remove('rotate-180'));
-
-                if (!isOpen) {
-                    content.classList.remove('hidden');
-                    if (icon) icon.classList.add('rotate-180');
-                }
-            });
-        }
-    });
 
     // 3. Program Studi Search Filter
     const searchInput = document.getElementById('prodi-search');

@@ -64,6 +64,16 @@
   border-color: #0088cc;
 }
 
+@media (max-width: 640px) {
+  .figma-footer .grid {
+    gap: 1.5rem;
+  }
+
+  .figma-card {
+    border-radius: 10px;
+  }
+}
+
 .figma-btn-primary {
   background-color: #0088cc;
   color: #ffffff;
