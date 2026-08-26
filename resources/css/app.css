@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   :root {
@@ -12,9 +14,19 @@
     --figma-text-muted: #64748b;
   }
 
+  html,
   body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     color: var(--figma-text-dark);
+    background-color: #ffffff;
+    min-height: 100%;
+  }
+
+  body {
+    background: #ffffff;
+  }
+
+  main {
     background-color: #ffffff;
   }
 }
