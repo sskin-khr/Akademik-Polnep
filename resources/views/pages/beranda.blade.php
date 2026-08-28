@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="relative h-[380px] sm:h-[480px] lg:h-[540px] w-full">
-        <img src="{{ asset('images/gedung_polnep.png') }}" alt="Gedung Utama POLNEP"
+        <img src="{{ asset($heroImage) }}" alt="Gedung Utama POLNEP"
             class="w-full h-full object-cover opacity-80">
     </div>
 
@@ -13,12 +13,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-left max-w-2xl mx-0 mb-14 space-y-4">
                 <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 font-outfit tracking-tight">
-                    AKADEMIK
+                    {{ $heroTitle }}
                 </h1>
                 <p class="text-slate-600 text-base leading-8">
-                    Pantau selalu informasi terupdate dari Biro Akademik untuk mendapatkan informasi-informasi penting
-                    mengenai akademik seperti tahun ajaran baru, semester antara, layanan akademik, atau informasi akademik
-                    lainnya di Politeknik Negeri Pontianak.
+                    {{ $heroDescription }}
                 </p>
             </div>
 

@@ -16,4 +16,9 @@ class ExampleTest extends TestCase
 
         $response->assertRedirect(route('login'));
     }
+
+    public function test_guests_are_sent_to_login_from_beranda(): void
+    {
+        $this->get('/beranda')->assertRedirect(route('login'));
+    }
 }

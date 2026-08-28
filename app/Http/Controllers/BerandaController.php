@@ -2,37 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+
 class BerandaController extends Controller
 {
     public function index()
     {
-        $informasiTerbaru = [
+        $settings = DB::table('site_settings')->pluck('value', 'key');
+        $heroTitle = $settings['hero_title'] ?? 'AKADEMIK';
+        $heroDescription = $settings['hero_description'] ?? 'Pantau selalu informasi terupdate dari Biro Akademik untuk mendapatkan informasi-informasi penting mengenai akademik seperti tahun ajaran baru, semester antara, layanan akademik, atau informasi akademik lainnya di Politeknik Negeri Pontianak.';
+        $heroImage = $settings['hero_image'] ?? 'images/gedung_polnep.png';
+
+        $informasiTerbaru = DB::table('homepage_cards')->orderBy('sort_order')->get()->map(fn ($card) => [
+            'id' => $card->id,
+            'judul' => $card->title,
+            'kategori' => $card->category,
+            'tanggal' => $card->published_label,
+            'ringkasan' => $card->summary,
+            'gambar' => $card->image,
+        ])->all();
+
+        return view('pages.beranda', compact('informasiTerbaru', 'heroTitle', 'heroDescription', 'heroImage'));
+    }
+
+    public function dashboard()
+    {
+        abort_unless(in_array(request()->user()->role, ['admin', 'penulis'], true), 403);
+
+        $stats = [
             [
-                'id' => 1,
-                'judul' => 'Pelaksanaan Daftar Ulang & Pengisian KRS Semester Ganjil TA 2026/2027',
-                'kategori' => 'REGISTRASI',
-                'tanggal' => '25 Juli 2026',
-                'ringkasan' => 'Diberitahukan kepada seluruh mahasiswa Politeknik Negeri Pontianak bahwa her-registrasi dan KRS online dibuka sampai 10 Agustus 2026.',
-                'gambar' => 'images/foto.png',
+                'label' => 'Total Konten',
+                'value' => DB::table('posts')->count(),
+                'icon' => 'fa-newspaper',
+                'tone' => 'blue',
             ],
             [
-                'id' => 2,
-                'judul' => 'POLNEP Luncurkan Gedung Laboratorium Terpadu Vokasi Berbasis Industry 4.0',
-                'kategori' => 'INFO TERBARU',
-                'tanggal' => '20 Juli 2026',
-                'ringkasan' => 'Peningkatan fasilitas riset terapan bagi mahasiswa vokasi guna memperkuat kompetensi siap kerja di era transformasi digital.',
-                'gambar' => 'images/foto 2.png',
+                'label' => 'Terbit',
+                'value' => DB::table('posts')->where('status', 'published')->count(),
+                'icon' => 'fa-circle-check',
+                'tone' => 'green',
             ],
             [
-                'id' => 3,
-                'judul' => 'Prosedur & Persyaratan Pendaftaran Wisuda Ke-36 Politeknik Negeri Pontianak',
-                'kategori' => 'INFO TERBARU',
-                'tanggal' => '15 Juli 2026',
-                'ringkasan' => 'Pengumuman tahapan verifikasi berkas bebas pustaka dan pendaftaran wisudawan diploma III dan sarjana terapan.',
-                'gambar' => 'images/foto 3.png',
+                'label' => 'Dokumen',
+                'value' => DB::table('documents')->count(),
+                'icon' => 'fa-folder-open',
+                'tone' => 'amber',
+            ],
+            [
+                'label' => 'Pengguna',
+                'value' => DB::table('users')->count(),
+                'icon' => 'fa-users',
+                'tone' => 'violet',
             ],
         ];
 
-        return view('pages.beranda', compact('informasiTerbaru'));
+        $postsTerbaru = DB::table('posts')
+            ->leftJoin('categories', 'categories.id', '=', 'posts.category_id')
+            ->select('posts.title', 'posts.status', 'posts.updated_at', 'categories.name as category_name')
+            ->latest('posts.updated_at')
+            ->limit(5)
+            ->get();
+
+        return view('pages.dashboard', [
+            'stats' => $stats,
+            'postsTerbaru' => $postsTerbaru,
+            'user' => request()->user(),
+        ]);
     }
 }
