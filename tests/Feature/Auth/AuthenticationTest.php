@@ -37,12 +37,14 @@ class AuthenticationTest extends TestCase
         $this->actingAs($user)->get('/dashboard')->assertForbidden();
     }
 
-    public function test_writers_can_access_dashboard(): void
+    public function test_writers_are_sent_to_news_dashboard(): void
     {
         $writer = User::factory()->create();
         $writer->forceFill(['role' => 'penulis'])->save();
 
-        $this->actingAs($writer)->get('/dashboard')->assertOk();
+        $this->actingAs($writer)
+            ->get('/dashboard')
+            ->assertRedirect(route('konten.berita', absolute: false));
     }
 
     public function test_users_can_authenticate_using_the_login_screen(): void

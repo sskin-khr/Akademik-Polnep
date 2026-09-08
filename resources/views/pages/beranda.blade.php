@@ -42,77 +42,47 @@
                     </div>
                 </div>
 
-                <div class="mt-16 flex flex-wrap items-center gap-3 mb-14" id="filter-buttons">
-                    <button data-filter="semua"
-                        class="filter-btn px-5 py-2 rounded-full bg-white text-slate-700 text-sm font-semibold border border-slate-200 shadow-sm transition hover:bg-sky-600 hover:text-white"
-                        id="filter-semua">
-                        Semua
-                    </button>
-                    <button data-filter="info terbaru"
-                        class="filter-btn px-5 py-2 rounded-full bg-white text-slate-700 text-sm font-semibold border border-slate-200 shadow-sm transition hover:bg-sky-600 hover:text-white"
-                        id="filter-info">
-                        Info Terbaru
-                    </button>
-                    <button data-filter="registrasi"
-                        class="filter-btn px-5 py-2 rounded-full bg-white text-slate-700 text-sm font-semibold border border-slate-200 shadow-sm transition hover:bg-sky-600 hover:text-white"
-                        id="filter-registrasi">
-                        Registrasi
-                    </button>
-                    <button data-filter="akademik"
-                        class="filter-btn px-5 py-2 rounded-full bg-white text-slate-700 text-sm font-semibold border border-slate-200 shadow-sm transition hover:bg-sky-600 hover:text-white"
-                        id="filter-akademik">
-                        Akademik
-                    </button>
-                    <button data-filter="beasiswa"
-                        class="filter-btn px-5 py-2 rounded-full bg-white text-slate-700 text-sm font-semibold border border-slate-200 shadow-sm transition hover:bg-sky-600 hover:text-white"
-                        id="filter-beasiswa">
-                        Beasiswa
-                    </button>
-                </div>
-
-                <div id="no-results" class="hidden text-center text-slate-500 py-8 col-span-full">Tidak ada hasil untuk
-                    filter ini.</div>
-
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    @foreach ($informasiTerbaru as $info)
-                        <div class="figma-card overflow-hidden flex flex-col justify-between"
-                            data-category="{{ \Illuminate\Support\Str::slug($info['kategori']) }}">
+                    @forelse ($informasiTerbaru as $info)
+                        <div class="figma-card overflow-hidden flex flex-col justify-between">
                             <div>
                                 <div class="h-48 overflow-hidden relative">
-                                    <img src="{{ asset($info['gambar']) }}" alt="{{ $info['judul'] }}"
+                                    <img src="{{ asset($info->thumbnail ?: 'images/foto.png') }}" alt="{{ $info->title }}"
                                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
                                     <span
                                         class="absolute top-3 left-3 bg-emerald-600 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow">
-                                        {{ $info['kategori'] }}
+                                        {{ $info->category_name ?? 'Berita' }}
                                     </span>
                                 </div>
 
                                 <div class="p-6 space-y-3">
                                     <p class="text-xs text-slate-400 font-semibold">
-                                        <i class="fa-regular fa-calendar mr-1"></i> {{ $info['tanggal'] }}
+                                        <i class="fa-regular fa-calendar mr-1"></i> {{ \Illuminate\Support\Carbon::parse($info->published_at)->translatedFormat('d F Y') }}
                                     </p>
                                     <h3
                                         class="text-base font-bold text-slate-900 font-outfit line-clamp-2 hover:text-sky-600 transition-colors">
-                                        {{ $info['judul'] }}
+                                        {{ $info->title }}
                                     </h3>
                                     <p class="text-slate-600 text-sm leading-relaxed line-clamp-3">
-                                        {{ $info['ringkasan'] }}
+                                        {{ $info->excerpt }}
                                     </p>
                                 </div>
                             </div>
 
                             <div class="p-6 pt-0">
-                                <a href="#"
+                                <a href="{{ route('berita.detail', $info->slug) }}"
                                     class="figma-btn-primary w-full py-3 px-4 text-sm flex items-center justify-center gap-2">
                                     <span>Lihat Detail</span>
                                     <i class="fa-solid fa-arrow-right text-xs"></i>
                                 </a>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <p class="col-span-full py-10 text-center text-slate-500">Belum ada berita yang dapat ditampilkan.</p>
+                    @endforelse
                 </div>
                 <div class="mt-16 pb-4 flex justify-center">
-                    <a href="/berita"
+                    <a href="{{ route('berita') }}"
                         class="figma-btn-primary inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg min-w-[220px]">
                         <span>Lihat Semua Berita</span>
                     </a>

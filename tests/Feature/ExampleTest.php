@@ -2,11 +2,13 @@
 
 namespace Tests\Feature;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic test example.
      */
@@ -17,8 +19,8 @@ class ExampleTest extends TestCase
         $response->assertRedirect(route('login'));
     }
 
-    public function test_guests_are_sent_to_login_from_beranda(): void
+    public function test_guests_can_view_beranda(): void
     {
-        $this->get('/beranda')->assertRedirect(route('login'));
+        $this->get('/beranda')->assertOk();
     }
 }

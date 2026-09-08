@@ -44,26 +44,26 @@
                             <ul id="profile-dropdown-menu"
                                 class="absolute left-0 top-full mt-2 hidden min-w-[220px] rounded-xl border border-slate-200 bg-white p-2 shadow-xl z-50">
                                 <li>
-                                    <a href="#visimisi" class="block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-700 transition-colors">
+                                    <a href="{{ route('visi-misi') }}" class="block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-700 transition-colors">
                                         Visi dan Misi
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#struktur" class="block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-700 transition-colors">
+                                    <a href="{{ route('struktur-organisasi') }}" class="block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-700 transition-colors">
                                         Struktur Organisasi
                                     </a>
                                 </li>
                             </ul>
                         </div>
-                        <a href="/berita"
+                        <a href="{{ route('berita') }}"
                             class="px-4 py-2 rounded-lg text-slate-700 hover:text-sky-600 hover:bg-slate-50 transition-colors">
                             Berita
                         </a>
-                        <a href="/faq"
+                        <a href="{{ route('faq') }}"
                             class="px-4 py-2 rounded-lg text-slate-700 hover:text-sky-600 hover:bg-slate-50 transition-colors">
                             FAQ
                         </a>
-                        <a href="/link"
+                        <a href="{{ route('dokumen') }}"
                             class="px-4 py-2 rounded-lg text-slate-700 hover:text-sky-600 hover:bg-slate-50 transition-colors">
                             Link
                         </a>
@@ -124,24 +124,24 @@
                             <i class="fa-solid fa-chevron-down text-[10px]"></i>
                         </button>
                         <div class="profile-mobile-panel hidden mt-2 space-y-1 rounded-xl border border-slate-200 bg-slate-50 p-2">
-                            <a href="#visimisi" class="block rounded-lg px-3 py-2 text-slate-700 hover:bg-white hover:text-sky-700 transition-colors">
+                            <a href="{{ route('visi-misi') }}" class="block rounded-lg px-3 py-2 text-slate-700 hover:bg-white hover:text-sky-700 transition-colors">
                                 Visi dan Misi
                             </a>
-                            <a href="#struktur" class="block rounded-lg px-3 py-2 text-slate-700 hover:bg-white hover:text-sky-700 transition-colors">
+                            <a href="{{ route('struktur-organisasi') }}" class="block rounded-lg px-3 py-2 text-slate-700 hover:bg-white hover:text-sky-700 transition-colors">
                                 Struktur Organisasi
                             </a>
                         </div>
                     </div>
 
-                    <a href="/berita"
+                    <a href="{{ route('berita') }}"
                         class="rounded-lg px-3 py-2 text-slate-700 hover:bg-slate-50 hover:text-sky-600 transition-colors">
                         Berita
                     </a>
-                    <a href="/faq"
+                    <a href="{{ route('faq') }}"
                         class="rounded-lg px-3 py-2 text-slate-700 hover:bg-slate-50 hover:text-sky-600 transition-colors">
                         FAQ
                     </a>
-                    <a href="/link"
+                    <a href="{{ route('dokumen') }}"
                         class="rounded-lg px-3 py-2 text-slate-700 hover:bg-slate-50 hover:text-sky-600 transition-colors">
                         Link
                     </a>
@@ -236,5 +236,6 @@
             </div>
         </div>
     </footer>
+    @stack('scripts')
 </body>
 </html>

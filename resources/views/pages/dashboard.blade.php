@@ -23,9 +23,9 @@
 
             <section class="overflow-hidden rounded-xl bg-white">
                 <div class="bg-[#b5d1e1] px-5 py-3 text-xs font-bold text-slate-800">Memulai</div>
-                <div class="grid grid-cols-1 gap-5 px-5 py-6 sm:grid-cols-2 lg:grid-cols-4">
-                    @foreach ([['Tambah Konten Beranda', 'Memperbaiki atau menambahkan konten di beranda', 'fa-house', 'konten.beranda'], ['Tambah Konten Visi & Misi', 'Memperbaiki atau menambahkan konten di halaman visi & misi', 'fa-book-open', 'konten.visi-misi'], ['Tambah Konten Struktur', 'Memperbaiki atau menambahkan konten di struktur organisasi', 'fa-sitemap', 'konten.struktur'], ['Tambah Konten Berita', 'Memperbaiki atau menambahkan konten di halaman berita', 'fa-newspaper', 'konten.berita']] as $index => $action)
-                        <a href="{{ route($action[3]) }}" class="group flex items-center gap-3 @if ($index > 0) border-slate-200 sm:border-l sm:pl-5 @endif"><i class="fa-solid fa-circle-plus shrink-0 text-sky-500"></i><span class="min-w-0"><strong class="block text-xs font-bold text-slate-900">{{ $action[0] }}</strong><small class="block text-[9px] leading-3 text-slate-600">{{ $action[1] }}</small></span></a>
+                <div class="grid grid-cols-1 gap-y-3 px-5 py-6 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-4">
+                    @foreach ([['Tambah Konten Beranda', 'Memperbaiki atau menambahkan konten di beranda', 'fa-house', 'konten.beranda'], ['Tambah Konten Visi & Misi', 'Memperbaiki atau menambahkan konten di halaman visi & misi', 'fa-book-open', 'konten.visi-misi'], ['Tambah Konten Struktur', 'Memperbaiki atau menambahkan konten di struktur organisasi', 'fa-sitemap', 'konten.struktur'], ['Tambah Konten Berita', 'Memperbaiki atau menambahkan konten di halaman berita', 'fa-newspaper', 'konten.berita'], ['Tambah Konten FAQ', 'Memperbaiki atau menambahkan pertanyaan FAQ', 'fa-circle-question', 'konten.faq'], ['Kelola Dokumen', 'Memperbaiki atau menambahkan dokumen akademik', 'fa-file-lines', 'konten.dokumen']] as $index => $action)
+                        <a href="{{ route($action[3]) }}" class="group flex min-h-[40px] items-center gap-3 @if ($index % 2 === 1) border-slate-200 sm:border-l sm:pl-5 @endif"><i class="fa-solid fa-circle-plus shrink-0 text-sky-500"></i><span class="min-w-0"><strong class="block text-xs font-bold text-slate-900">{{ $action[0] }}</strong><small class="block text-[9px] leading-3 text-slate-600">{{ $action[1] }}</small></span></a>
                     @endforeach
                 </div>
             </section>
