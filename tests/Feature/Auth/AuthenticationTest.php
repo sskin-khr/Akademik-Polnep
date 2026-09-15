@@ -85,12 +85,40 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $this->post('/login', [
+        $response = $this->post('/login', [
             'email' => $user->email,
             'password' => 'wrong-password',
         ]);
 
         $this->assertGuest();
+        $response->assertSessionHas('errors', function ($errors): bool {
+            if ($errors instanceof \Illuminate\Support\ViewErrorBag) {
+                return $errors->getBag('default')->get('password') === ['Email atau password salah.'];
+            }
+
+            return ($errors['password'] ?? null) === ['Email atau password salah.'];
+        });
+    }
+
+    public function test_users_can_not_authenticate_with_unknown_email(): void
+    {
+        $response = $this->post('/login', [
+            'email' => 'unknown@akademik.test',
+            'password' => 'password',
+        ]);
+
+        $this->assertGuest();
+        $this->assertSame(302, $response->status());
+    }
+
+    public function test_users_see_the_failed_login_message_for_an_invalid_email_format(): void
+    {
+        $response = $this->post('/login', [
+            'email' => 'rqwqwrqe',
+            'password' => 'password',
+        ]);
+
+        $response->assertSessionHasErrors('email');
     }
 
     public function test_users_can_logout(): void

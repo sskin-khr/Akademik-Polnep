@@ -16,7 +16,7 @@
 
   html,
   body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     color: var(--figma-text-dark);
     background-color: #ffffff;
     min-height: 100%;
@@ -29,6 +29,10 @@
   main {
     background-color: #ffffff;
   }
+}
+
+.font-outfit {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
 .figma-navbar {
